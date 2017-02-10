@@ -67,7 +67,8 @@ function findOne(req, res, next) {
   Models.Question.findAll({
     where: { quizId: req.params.id }
   }).then((questions) => {
-    res.json(questions);
+    console.log(questions);
+    res.status(200).json(questions);
   }).catch((err) => {
     next(err);
   })

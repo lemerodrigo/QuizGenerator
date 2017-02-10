@@ -4,13 +4,17 @@ import { Router, IndexRoute, Route, browserHistory } from 'react-router';
 
 import App from './components/App.jsx';
 import Home from './components/Home.jsx';
-import CreateQuiz from './components/CreateQuiz.jsx';
+import Quizzes from './components/Quizzes.jsx';
+import NewQuiz from './components/NewQuiz.jsx';
 
 ReactDOM.render((
   <Router history={browserHistory}>
     <Route path='/' component={App}>
       <IndexRoute component={Home} />
-      <Route path='createquiz' component={CreateQuiz} />
+      <Route path='quizzes'>
+        <IndexRoute component={Quizzes} />
+        <Route path='new' component={NewQuiz} />
+      </Route>
     </Route>
   </Router>
 ), document.getElementById('root'));
