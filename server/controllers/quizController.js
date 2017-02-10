@@ -1,39 +1,7 @@
 const express = require('express');
 const router = express.Router();
-
+const db = require('../models/db');
 const Models = require('../models');
-
-// {
-//   results: [
-//     {
-//       id: 1,
-//       name: 'First Quiz',
-//       description: 'first quiz in this query',
-//       createdAt: 'jahdsajdsad',
-//       updatedAt: 'dajhdskjadsjad',
-//       questions: [
-//         {
-//           id: 1,
-//           question: 'Do you like hot dogs??',
-//           questionType: 'something',
-//           description: 'these are like fucking directions',
-//           answers: [
-//             {
-//               id: 1,
-//               answer: 'Yes'
-//             },
-//             {
-//               id: 1,
-//               answer: 'No'
-//             }
-//           ]
-//         }
-//       ]
-//     },
-//     { quiz 2 },
-//     { quiz 3 },
-//   ]
-// }
 
 // get all quizzes
 function findAll(req, res, next) {
@@ -44,44 +12,64 @@ function findAll(req, res, next) {
   })
 }
 
-// select * from quizzes as qz, questions as qu, answers as an
-// where qz.id=1 and qz.id=qu.id and qu.id=an.idi
-
 // add quiz
 function addOne(req, res) {
 
 }
 
-// Models.Quiz.create({
-//   name: 'second quiz',
-//   description: 'description'
-// }).then((quiz) => {
-//   Models.Question.create({
-//     question: 'Do you like hot dogs?',
-//     description: 'seriously',
-//     quizId: quiz.id
-//   }).then((question) => {
-//     console.log('quiz and question created');
-//   })
-// }).catch((err) => {
-//   console.log(err);
-// });
-
-// Models.Answer.create({
-//   answer: 'No',
-//   questionId: 1
-// });
-
 // get one quiz
 function findOne(req, res, next) {
+  let parsedQuiz;
 
+  db.query(`SELECT * FROM quizzes WHERE id = ${req.params.id}`)
+    .then((quiz) => {
+      parsedQuiz = quiz[0][0];
+      parsedQuiz.name = quiz[0][0].name;
+      parsedQuiz.description = quiz[0][0].description;
+
+      return quiz[0][0];
+    })
+    .then((quiz) => {
+      return db.query(`SELECT * FROM questions WHERE "quizId" = ${quiz.id}`);
+    })
+    .then((questions) => {
+      parsedQuiz.questions = [];
+      questions[0].forEach((question) => {
+        parsedQuiz.questions.push({
+          question: question.question,
+          description: question.description,
+          answers: [],
+        });
+      });
+
+      return questions[0];
+    })
+    .then((questions) => {
+      const prom = questions.map((question) => {
+        return db.query(`SELECT * FROM answers WHERE "questionId" = ${question.id}`).then((answers) => {
+          return answers[0];
+        });
+      });
+
+      return Promise.all(prom);
+    })
+    .then((arrOfObjects) => {
+      parsedQuiz.questions.forEach((question, index) => {
+        arrOfObjects[index].forEach((answer) => {
+          question.answers.push(answer.answer);
+        });
+      });
+
+      res.status(200).json(parsedQuiz);
+    })
+    .catch((err) => {
+      next(err);
+    });
 }
-
 
 function updateOne(req, res, next) {
 
 }
-
 
 function deleteOne(req, res, next) {
 

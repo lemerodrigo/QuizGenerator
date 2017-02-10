@@ -9,9 +9,10 @@ import Quizzes from './components/Quizzes.jsx';
 import NewQuiz from './components/NewQuiz.jsx';
 
 const requireAuth = (nextState, replace) => {
-  if (!auth.isLoggedIn()) {
-    replace({ pathname: '/login' })
-  }
+  // if (!auth.isLoggedIn()) {
+  //   replace({ pathname: '/login' })
+  // }
+  return true;
 }
 
 import ShowQuiz from './components/ShowQuiz.jsx';
