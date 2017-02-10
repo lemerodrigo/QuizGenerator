@@ -37,14 +37,11 @@ const Models = require('../models');
 
 // get all quizzes
 function findAll(req, res, next) {
-  Models.Quiz
-    .findAll({})
-    .then((quizzes) => {
-      res.status(200).json(quizzes);
-    })
-    .catch((err) => {
-      next(err);
-    });
+  Models.Quiz.findAll({}).then((quizzes) => {
+    return res.status(200).json(quizzes);
+  }).catch((err) => {
+    next(err);
+  })
 }
 
 // select * from quizzes as qz, questions as qu, answers as an
@@ -52,28 +49,33 @@ function findAll(req, res, next) {
 
 // add quiz
 function addOne(req, res) {
-  Models.Quiz.create({
-    name: 'test',
-    description: 'this is the description'
-  }).then((quiz) => {
-    res.status(200).json(quiz);
-  }).catch((err) => {
-    res.send(err);
-  })
+
 }
+
+// Models.Quiz.create({
+//   name: 'second quiz',
+//   description: 'description'
+// }).then((quiz) => {
+//   Models.Question.create({
+//     question: 'Do you like hot dogs?',
+//     description: 'seriously',
+//     quizId: quiz.id
+//   }).then((question) => {
+//     console.log('quiz and question created');
+//   })
+// }).catch((err) => {
+//   console.log(err);
+// });
+
+// Models.Answer.create({
+//   answer: 'No',
+//   questionId: 1
+// });
 
 // get one quiz
 function findOne(req, res, next) {
-  Models.Question.findAll({
-    where: { quizId: req.params.id }
-  }).then((questions) => {
-    console.log(questions);
-    res.status(200).json(questions);
-  }).catch((err) => {
-    next(err);
-  })
-}
 
+}
 
 
 function updateOne(req, res, next) {

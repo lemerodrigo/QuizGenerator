@@ -14,6 +14,8 @@ const requireAuth = (nextState, replace) => {
   }
 }
 
+import ShowQuiz from './components/ShowQuiz.jsx';
+
 ReactDOM.render((
   <Router history={browserHistory}>
     <Route path='login' component={Login} />
@@ -22,6 +24,7 @@ ReactDOM.render((
       <Route path='quizzes' onEnter={requireAuth}>
         <IndexRoute component={Quizzes} onEnter={requireAuth} />
         <Route path='new' component={NewQuiz} onEnter={requireAuth} />
+        <Route path=':id' component={ShowQuiz} onEnter={requireAuth} />
       </Route>
     </Route>
   </Router>
