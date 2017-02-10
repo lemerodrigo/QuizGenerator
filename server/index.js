@@ -30,6 +30,7 @@ app.use('/api/quizzes', quizzes);
 app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
 app.use((err, req, res, next) => {
+  console.log(err);
   res.status(err.status || 500).json({ err });
 });
 

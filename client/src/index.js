@@ -7,7 +7,8 @@ import Login from './components/Login.jsx';
 import Home from './components/Home.jsx';
 import Quizzes from './components/Quizzes.jsx';
 import NewQuiz from './components/NewQuiz.jsx';
- 
+import ShowQuiz from './components/ShowQuiz.jsx';
+
 ReactDOM.render((
   <Router history={browserHistory}>
     <Route path='login' component={Login} />
@@ -16,6 +17,7 @@ ReactDOM.render((
       <Route path='quizzes'>
         <IndexRoute component={Quizzes} />
         <Route path='new' component={NewQuiz} />
+        <Route path=':id' component={ShowQuiz} />
       </Route>
     </Route>
   </Router>
