@@ -3,13 +3,15 @@ import { Link } from 'react-router';
 
 const Quizzes = (props) => {
   const quizzes = props.quizzes.map((quiz) => {
-    return <li key={quiz.id}><Link to={`/quizzes/${quiz.id}`}>{quiz.name}: {quiz.description}</Link></li>
+    return <Link className="list-group-item" key={quiz.id} to={`/quizzes/${quiz.id}`}>{quiz.name}: {quiz.description}</Link>
   });
 
   return (
-    <div>
-      <h2>List quizzes here</h2>
-      {quizzes}
+    <div className="container">
+      <h2>Quizzes</h2>
+      <div class="list-group">
+        {quizzes}
+      </div>
     </div>
   );
 }
