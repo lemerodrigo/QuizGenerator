@@ -64,14 +64,13 @@ function addOne(req, res) {
 
 // get one quiz
 function findOne(req, res, next) {
-  Models.Question.findAll({
-    where: { quizId: req.params.id }
-  }).then((questions) => {
-    console.log(questions);
+  Models.Question
+  .findAll({ where: { quizId: req.params.id } })
+  .then((questions) => {
     res.status(200).json(questions);
   }).catch((err) => {
     next(err);
-  })
+  });
 }
 
 
