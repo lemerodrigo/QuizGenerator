@@ -6,8 +6,23 @@ class ShowQuiz extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {}
+    this.state = {
+      quiz: {},
+    };
   };
+
+  componentDidMount() {
+    fetch(`/api/quizzes/${this.props.params.id}`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((quiz) => {
+        this.setState({ quiz });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   render() {
     console.log(this.props.params.id);
@@ -33,7 +48,7 @@ class ShowQuiz extends React.Component {
             <ShowQuestion/>
             <ShowQuestion/>
             <ShowQuestion/>
-            
+
           </div>
         </div>
       </div>
