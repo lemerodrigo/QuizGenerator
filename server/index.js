@@ -6,7 +6,7 @@ const app = express();
 
 const quizzes = require('./routes/quizzes');
 
-if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development') {
   console.log('DEVELOPMENT MODE');
   console.log('WILL HOT RELOAD CHANGES');
   const webpack = require('webpack');
