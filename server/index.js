@@ -6,10 +6,26 @@ const app = express();
 
 const quizzes = require('./routes/quizzes');
 
+if (process.env.NODE_ENV === 'development') {
+  console.log('DEVELOPMENT MODE');
+  console.log('WILL HOT RELOAD CHANGES');
+  const webpack = require('webpack');
+  const webpackConfig = require('../webpack.config');
+  const compiler = webpack(webpackConfig);
+
+  app.use(require('webpack-dev-middleware')(compiler, {
+    hot: true,
+    publicPath: webpackConfig.output.publicPath,
+    // noInfo: true,
+  }));
+
+  app.use(require('webpack-hot-middleware')(compiler));
+}
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(express.static(path.join(__dirname, '..', 'client', 'build', 'assets')));
+app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
 app.use('/api/quizzes', quizzes);
 

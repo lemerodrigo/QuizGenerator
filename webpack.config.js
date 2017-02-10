@@ -3,10 +3,12 @@ const path = require('path');
 
 module.exports = {
   entry: [
+    'webpack-hot-middleware/client?reload=true',
     path.join(__dirname, 'client', 'src', 'index.js'),
   ],
   output: {
-    path: path.join(__dirname, 'client', 'build', 'assets', 'js'),
+    path: path.join(__dirname, 'client', 'build'),
+    publicPath: '/assets/',
     filename: 'bundle.js',
   },
   module: {
@@ -19,6 +21,10 @@ module.exports = {
     ],
   },
   stats: {
-    // colors: true,
+    colors: true,
   },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+  ],
 };
