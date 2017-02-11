@@ -17,7 +17,7 @@ class Navbar extends Component {
             {this.props.loggedIn ? (
               <ul className='nav navbar-nav navbar-right'>
                 <li><Link to='/quizzes'>Quizzes</Link></li>
-                <li><Link to='/quizzes/new'>Create a New Quiz</Link></li>
+                <li><Link to='/quizzes/new'>Create new quiz</Link></li>
                 <li><Link to="/logout">Log out</Link></li>
               </ul>)
             : (

@@ -8,7 +8,7 @@ class App extends Component {
     super(props);
     this.state = {
       quizzes: [],
-      loggedIn: true, // change this back to false
+      loggedIn: false, // change this back to false
       user: null,
     };
     this.updateState = this.updateState.bind(this);

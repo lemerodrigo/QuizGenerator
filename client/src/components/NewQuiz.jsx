@@ -102,7 +102,7 @@ class NewQuiz extends React.Component {
       <div className="editing-surface container">
         <div className="row">
           <div className="quiz col-sm-6 col-sm-offset-3">
-
+            <h1>Create new quiz</h1>
             <form onSubmit={this.handleSubmit}>
 
               <div className="quiz-title">
@@ -113,7 +113,7 @@ class NewQuiz extends React.Component {
                     type="text"
                     onChange={this.handleTitleChange}
                     value={this.state.quizTitle}
-                    placeholder="Quiz Title" />
+                    placeholder="Title" />
                 </div>
               </div>
 
@@ -126,7 +126,7 @@ class NewQuiz extends React.Component {
                     rows="3"
                     onChange={this.handleDescChange}
                     value={this.state.quizDesc}
-                    placeholder="Quiz Description">
+                    placeholder="Description">
                   </textarea>
                   <br />
                 </div>
