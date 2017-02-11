@@ -12,6 +12,7 @@ class NewQuiz extends React.Component {
       questions: [],
       answers: [],
       newQuestion: '',
+      newAnswers: [],
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -58,16 +59,24 @@ class NewQuiz extends React.Component {
   }
 
   handleNewAnswerChange(e) {
-    let targetIndex = 'newAnswerQuestion' + e.target.dataset.question;
-    const newState = {};
-    newState[targetIndex] = e.target.value;
-    this.setState(newState, () => console.log('new Answers:', this.state));
+    const updateNewAnswers = this.state.newAnswers.slice();
+    updateNewAnswers[e.target.dataset.question] = e.target.value;
+    this.setState({
+      newAnswers: updateNewAnswers,
+    }, () => console.log('new Answers:', this.state.newAnswers));
   }
 
   makeNewAnswer(e) {
+    e.preventDefault();
+    const updateAnswers = this.state.answers.slice();
+    if (!updateAnswers[e.target.dataset.question]) {
+      updateAnswers[e.target.dataset.question] = [];
+    }
+    updateAnswers[e.target.dataset.question].push(this.state.newAnswers[e.target.dataset.question]);
     this.setState({
-
-    })
+      answers: updateAnswers,
+      newAnswers: [],
+    }, () => console.log('Answers:', this.state));
   }
 
   initializeState() {
@@ -87,7 +96,7 @@ class NewQuiz extends React.Component {
     const questionsArr = questions.map((question, i) => (<QuestionAdmin
       questionKey={i}
       question={question}
-      answers={this.state.answers}
+      answers={this.state.answers[i]}
       makeNewAnswer={this.makeNewAnswer}
       handleNewAnswerChange={this.handleNewAnswerChange}
     />));
