@@ -18,12 +18,6 @@ const QuestionAdmin = (props) => {
       />
 
       <div className="question-controls panel-footer">
-        <span className="toggle-order">
-          <small>Question Order: <a href="#">-</a>/<a href="#">+</a> </small>
-        </span>
-        <span className="delete-question">
-          <small><a href="#">Del</a></small>
-        </span>
       </div>
 
     </div>
