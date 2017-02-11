@@ -11,12 +11,14 @@ function validate(req, res, next) {
       email: req.body.email,
     },
   }).then((user) => {
+    // General error to be returned. Not the best approach.
     const err = new Error('Invalida data.');
     err.status = 500;
     if (!user) {
       next(err);
     } else {
       if (user.password === req.body.password) {
+        // We could check the user password in the database. Let's return it!
         return res.status(200).json(user);
       } else {
         next(err);
