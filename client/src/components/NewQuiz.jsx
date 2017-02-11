@@ -27,7 +27,7 @@ class NewQuiz extends React.Component {
   handleTitleChange(e) {
     this.setState({ 
       quizTitle: e.target.value 
-    }, () => console.log('Quiz Title', this.state.quizTitle));
+    });
   }
 
   handleDescChange(e) {
@@ -76,11 +76,8 @@ class NewQuiz extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-
-    
+    this.props.createQuiz(e, this.state);
   }
-
-  
 
   render() {
     const questions = this.state.questions ? this.state.questions : [];
@@ -127,6 +124,7 @@ class NewQuiz extends React.Component {
               </div>
 
               {questionsArr}
+
               <NewQuestion
                 newQuestion={this.state.newQuestion}
                 handleNewQuestionChange={this.handleNewQuestionChange}
