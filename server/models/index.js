@@ -20,7 +20,7 @@ Result.belongsTo(Response);
 Result.belongsTo(Question);
 Result.belongsTo(Answer);
 
-db.sync({ force: true });
+db.sync();
 
 module.exports = {
   User,
