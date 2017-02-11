@@ -24,8 +24,6 @@ function addOne(req, res, next) {
     .then((quiz) => {
       // also create answers
       // only need to send back quiz info - then update state
-      console.log('new quiz created');
-      console.log(quiz);
       res.status(200).send(quiz);
     })
     .catch((err) => {

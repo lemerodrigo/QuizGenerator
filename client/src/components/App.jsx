@@ -58,7 +58,7 @@ class App extends Component {
         } else {
           console.log('Signup Error');
         }
-      }) 
+      })
       .catch((err) => {
         console.log(err);
       })
@@ -117,9 +117,18 @@ class App extends Component {
     }
     return fetch('/api/quizzes', data)
       .then(response => response.json()) // update state and redirect to another page
+      .then((data) => {
+        const updatedQuizzes = this.state.quizzes.slice();
+        updatedQuizzes.push(data);
+        this.setState({
+          quizzes: updatedQuizzes,
+        }, () => {
+          this.props.router.push('/quizzes');
+        });
+      })
       .catch((err) => {
         console.log(err);
-      }); 
+      });
   }
 
   render() {
