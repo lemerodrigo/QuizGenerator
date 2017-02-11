@@ -8,7 +8,7 @@ class App extends Component {
     super(props);
     this.state = {
       quizzes: [],
-      loggedIn: false,
+      loggedIn: true, // change this back to false
       user: null,
     };
     this.updateState = this.updateState.bind(this);
@@ -16,6 +16,7 @@ class App extends Component {
     this.login = this.login.bind(this);
     this.signUp = this.signUp.bind(this);
     this.logout = this.logout.bind(this);
+    this.createQuiz = this.createQuiz.bind(this);
   }
 
   getState() {
@@ -93,6 +94,31 @@ class App extends Component {
       loggedIn: false,
       user: null,
     });
+  }
+
+  createQuiz(e) {
+    let questions = [];
+    let answers = [];
+
+    let data = {
+      method: 'POST',
+      credentials: 'same-origin',
+      mode: 'same-origin',
+      body: JSON.stringify({
+        name: name,
+        description: description,
+        questions: questions,
+      }),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    }
+    return fetch('/api/quizzes', data)
+      .then(response => response.json()) // update state and redirect to another page
+      .catch((err) => {
+        console.log(err);
+      }); 
   }
 
   render() {

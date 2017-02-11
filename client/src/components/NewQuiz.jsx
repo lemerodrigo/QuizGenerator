@@ -2,37 +2,145 @@ import React from 'react';
 import QuestionAdmin from './QuestionAdmin.jsx';
 import NewQuestion from './NewQuestion.jsx';
 
-const NewQuiz = () => (
-  <div className="editing-surface container">
-    <div className="row">
-      <div className="quiz col-sm-6 col-sm-offset-3">
+class NewQuiz extends React.Component {
+  constructor(props) {
+    super(props);
 
-        <div className="quiz-title">
-          <h2>Quiz Title</h2>
-          <div className="quiz-title-input input-group">
-            <input type="text" className="form-control" placeholder="Quiz Title" />
-            <span className="input-group-btn">
-              <button type="submit" className="btn btn-default">Submit</button>
-            </span>
+    this.state = {
+      quizTitle: '',
+      quizDesc: '',
+      questions: [],
+      answers: [],
+      newQuestion: '',
+    }
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.initializeState = this.initializeState.bind(this);
+    this.makeNewQuestion = this.makeNewQuestion.bind(this);
+    this.makeNewAnswer = this.makeNewAnswer.bind(this);
+    this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleDescChange = this.handleDescChange.bind(this);
+    this.handleNewQuestionChange = this.handleNewQuestionChange.bind(this);
+    this.handleNewAnswerChange = this.handleNewAnswerChange.bind(this);
+  }
+
+  handleTitleChange(e) {
+    this.setState({ 
+      quizTitle: e.target.value 
+    }, () => console.log('Quiz Title', this.state.quizTitle));
+  }
+
+  handleDescChange(e) {
+    this.setState({ 
+      quizDesc: e.target.value 
+    }, () => console.log('Quiz Desc', this.state.quizDesc));
+  }
+
+  handleNewQuestionChange(e) {
+    this.setState({ 
+      newQuestion: e.target.value 
+    }, () => {
+      console.log('newQ:', this.state.newQuestion);
+      if (e.keyCode === 13) {
+        this.makeNewQuestion(e);
+      }
+    });
+  }
+
+  makeNewQuestion(e) {
+    e.preventDefault();
+    const newQuestions = this.state.questions.slice();
+    newQuestions.push(this.state.newQuestion);
+    this.setState({
+      questions: newQuestions,
+      newQuestion: '',
+    }, () => console.log('questions:', this.state.questions));
+  }
+
+  handleNewAnswerChange(e) {
+    let targetIndex = 'newAnswerQuestion' + e.target.dataset.question;
+    const newState = {};
+    newState[targetIndex] = e.target.value;
+    this.setState(newState, () => console.log('new Answers:', this.state));
+  }
+
+  makeNewAnswer(e) {
+    this.setState({
+
+    })
+  }
+
+  initializeState() {
+    // if this is a pre-existing quiz, set state
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+
+    
+  }
+
+  
+
+  render() {
+    const questions = this.state.questions ? this.state.questions : [];
+    const questionsArr = questions.map((question, i) => (<QuestionAdmin
+      questionKey={i}
+      question={question}
+      answers={this.state.answers}
+      makeNewAnswer={this.makeNewAnswer}
+      handleNewAnswerChange={this.handleNewAnswerChange}
+    />));
+
+    return (
+      <div className="editing-surface container">
+        <div className="row">
+          <div className="quiz col-sm-6 col-sm-offset-3">
+
+            <form onSubmit={this.handleSubmit}>
+
+              <div className="quiz-title">
+                <div className="quiz-title-input">
+                  <input
+                    className="form-control"
+                    name="quiz-name"
+                    type="text"
+                    onChange={this.handleTitleChange}
+                    value={this.state.quizTitle}
+                    placeholder="Quiz Title" />
+                </div>
+              </div>
+
+              <div className="quiz-desc">
+                <br />
+                <div className="quiz-desc-input">
+                  <textarea
+                    className="form-control"
+                    name="quiz-desc"
+                    rows="3"
+                    onChange={this.handleDescChange}
+                    value={this.state.quizDesc}
+                    placeholder="Quiz Description">
+                  </textarea>
+                  <br />
+                </div>
+              </div>
+
+              {questionsArr}
+              <NewQuestion
+                newQuestion={this.state.newQuestion}
+                handleNewQuestionChange={this.handleNewQuestionChange}
+                makeNewQuestion={this.makeNewQuestion} />
+
+              <button type="submit" className="btn btn-primary btn-lg btn-block">Save Quiz</button>
+
+            </form>
+
           </div>
         </div>
-
-        <div className="quiz-desc">
-          <h5>Quiz Description. Lorem ipsum dolar.</h5>
-          <div className="quiz-desc-input">
-            <textarea className="form-control" rows="3" placeholder="Quiz Description"></textarea><br/>
-            <button type="submit" className="btn btn-default">Submit</button>
-          </div>
-        </div>
-
-        <hr/>
-
-        <QuestionAdmin/>
-        <NewQuestion/>
-
       </div>
-    </div>
-  </div>
-)
+    );
+  }
+}
 
 export default NewQuiz;
