@@ -7,7 +7,7 @@ const app = express();
 const quizzes = require('./routes/quizzes');
 const users = require('./routes/users');
 
-  if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
   console.log('DEVELOPMENT MODE');
   console.log('WILL HOT RELOAD CHANGES');
   const webpack = require('webpack');
@@ -25,14 +25,12 @@ const users = require('./routes/users');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
 app.use('/api/quizzes', quizzes);
 app.use('/api/users', users);
 
-app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
-
 app.use((err, req, res, next) => {
-  console.log(err);
   res.status(err.status || 500).json(err);
 });
 
