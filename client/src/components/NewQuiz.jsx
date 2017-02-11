@@ -9,59 +9,59 @@ class NewQuiz extends React.Component {
     this.state = {
       quizTitle: '',
       quizDesc: '',
-      questions: [
-        {
-          question: "What do cows drink?",
-          answers: [
-            "Starbucks",
-            "Milk",
-            "Water",
-            "Orange Juice"
-          ],
-        },
-        {
-          question: "What do cats drink?",
-          answers: [
-            "Starbucks",
-            "Milk",
-            "Water",
-            "Scotch"
-          ],
-        },
-        {
-          question: "What do dogs drink?",
-          answers: [
-            "Starbucks",
-            "Milk",
-            "Water",
-            "Beer"
-          ],
-        },
-      ],
-      descSet: 'invisible',
-      questionCount: 0,
+      questions: [],
+      answers: [],
+      newQuestion: '',
+      newAnswers: [],
     }
+
     this.handleSubmit = this.handleSubmit.bind(this);
     this.initializeState = this.initializeState.bind(this);
     this.makeNewQuestion = this.makeNewQuestion.bind(this);
     this.makeNewAnswer = this.makeNewAnswer.bind(this);
+    this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleDescChange = this.handleDescChange.bind(this);
+    this.handleNewQuestionChange = this.handleNewQuestionChange.bind(this);
   }
 
-  initializeState() {
-    // if this is a pre-existing quiz, set state
+  handleTitleChange(e) {
+    this.setState({ 
+      quizTitle: e.target.value 
+    }, () => console.log('Quiz Title', this.state.quizTitle));
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    this.setState({
+  handleDescChange(e) {
+    this.setState({ 
+      quizDesc: e.target.value 
+    }, () => console.log('Quiz Desc', this.state.quizDesc));
+  }
 
-    })
+  handleNewQuestionChange(e) {
+    this.setState({ 
+      newQuestion: e.target.value 
+    }, () => {
+      if (e.keyCode === 13) {
+        this.makeNewQuestion(e);
+      }
+    });
   }
 
   makeNewQuestion(e) {
+    e.preventDefault();
+    const newQuestions = this.state.questions.slice();
+    newQuestions.push(this.state.newQuestion);
     this.setState({
+      questions: newQuestions,
+      newQuestion: '',
+    }, () => console.log('questions:', this.state.questions));
+  }
 
-    })
+  handleNewAnswerChange(e) {
+    const newAnswers = this.state.answers.slice();
+    newAnswers[e.target.key] = this.target.value;
+    this.setState({
+      newAnswers: newAnswers
+    }, () => console.log('questions:', this.state.answers));
   }
 
   makeNewAnswer(e) {
@@ -70,13 +70,27 @@ class NewQuiz extends React.Component {
     })
   }
 
-  render() {
+  initializeState() {
+    // if this is a pre-existing quiz, set state
+  }
 
-    const questionsArr = this.state.questions ? this.state.questions.map(q => (<QuestionAdmin
-      question={q.question}
-      answers={q.answers}
+  handleSubmit(e) {
+    e.preventDefault();
+
+    
+  }
+
+  
+
+  render() {
+    console.log('questions', this.state.questions);
+    const questions = this.state.questions ? this.state.questions : [];
+    const questionsArr = questions.map((question, i) => (<QuestionAdmin
+      key={i}
+      question={question}
+      answers={this.state.answers[i]}
       makeNewAnswer={this.makeNewAnswer}
-    />)) : [];
+    />));
 
     return (
       <div className="editing-surface container">
@@ -86,43 +100,39 @@ class NewQuiz extends React.Component {
             <form onSubmit={this.handleSubmit}>
 
               <div className="quiz-title">
-                <div className="quiz-title-input input-group">
+                <div className="quiz-title-input">
                   <input
-                    value={this.state.quizTitle}
-                    type="text"
                     className="form-control"
-                    placeholder="Quiz Title"
-                  />
-                  <span className="input-group-btn">
-                    <button
-                      onClick={this.makeTitle}
-                      type="submit"
-                      className="btn btn-default"
-                      >Submit
-                    </button>
-                  </span>
+                    name="quiz-name"
+                    type="text"
+                    onChange={this.handleTitleChange}
+                    value={this.state.quizTitle}
+                    placeholder="Quiz Title" />
                 </div>
               </div>
 
               <div className="quiz-desc">
-                <h5 className={this.state.descSet}>{this.state.quizDesc}</h5>
+                <br />
                 <div className="quiz-desc-input">
-                  <textarea className="form-control" rows="3" placeholder="Quiz Description"></textarea><br/>
-                  <button
-                    onClick={this.makeDesc}
-                    type="submit"
-                    className="btn btn-default">
-                    Submit
-                  </button>
+                  <textarea
+                    className="form-control"
+                    name="quiz-desc"
+                    rows="3"
+                    onChange={this.handleDescChange}
+                    value={this.state.quizDesc}
+                    placeholder="Quiz Description">
+                  </textarea>
+                  <br />
                 </div>
               </div>
 
-              <hr/>
-
               {questionsArr}
-              <NewQuestion makeNewQuestion={this.makeNewQuestion}/>
+              <NewQuestion
+                newQuestion={this.state.newQuestion}
+                handleNewQuestionChange={this.handleNewQuestionChange}
+                makeNewQuestion={this.makeNewQuestion} />
 
-              <button type="submit" className="btn btn-primary btn-block">Save Quiz</button>
+              <button type="submit" className="btn btn-primary btn-lg btn-block">Save Quiz</button>
 
             </form>
 

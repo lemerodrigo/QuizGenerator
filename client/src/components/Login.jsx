@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-const AuthService = require('./../classes/AuthService');
-const auth = new AuthService();
 
 class Login extends Component {
   constructor(props) {
@@ -9,17 +7,6 @@ class Login extends Component {
         email: '',
         password: '',
     };
-  }
-
-  login(e) {
-    e.preventDefault();
-    auth.login(this.state.email, this.state.password)
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((err) => {
-        console.log('Error logging in', err);
-      });
   }
 
   handleChange(event) {
@@ -41,7 +28,7 @@ class Login extends Component {
                             <h1 className="panel-title">Quiz Generator</h1>
                         </div>
                         <div className="panel-body">
-                            <form role="form" id="login-form">
+                            <form role="form" id="login-form" onSubmit={this.props.login}>
                                 <fieldset>
                                     <div className="form-group">
                                         <input onChange={this.handleChange.bind(this)} name="email" value={this.state.email} className="form-control" placeholder="E-mail" autoFocus />
@@ -49,14 +36,14 @@ class Login extends Component {
                                     <div className="form-group">
                                         <input onChange={this.handleChange.bind(this)} name="password" value={this.state.password} className="form-control" placeholder="Password" />
                                     </div>
-                                    <button type="submit" onClick={this.login.bind(this)} className="btn btn-lg btn-primary btn-block">Login</button>
+                                    <button type="submit" className="btn btn-lg btn-primary btn-block">Login</button>
                                 </fieldset>
                             </form>
                         </div>
                     </div>
                 </div>
-              </div>
             </div>
+        </div>
     );
   }
 }

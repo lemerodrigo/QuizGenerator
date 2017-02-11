@@ -28,9 +28,10 @@ class ShowQuiz extends React.Component {
 
   render() {
 
-    const showQuestionArr = this.state.quiz.questions.map(q => {
+    const showQuestionArr = this.state.quiz.questions.map((q, i) => {
       return (
         <ShowQuestion
+          key={q.id}
           question={q.question}
           answers={q.answers}
         />

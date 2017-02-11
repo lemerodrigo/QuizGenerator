@@ -26,6 +26,7 @@ function findOne(req, res, next) {
       parsedQuiz = quiz[0][0];
       parsedQuiz.name = quiz[0][0].name;
       parsedQuiz.description = quiz[0][0].description;
+      parsedQuiz.id = quiz[0][0].id;
 
       return quiz[0][0];
     })
@@ -36,6 +37,7 @@ function findOne(req, res, next) {
       parsedQuiz.questions = [];
       questions[0].forEach((question) => {
         parsedQuiz.questions.push({
+          id: question.id,
           question: question.question,
           description: question.description,
           answers: [],

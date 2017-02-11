@@ -2,7 +2,6 @@ import React from 'react';
 import ShowAnswer from './ShowAnswer.jsx';
 
 const AnswerAdmin = (props) => {
-
   const answersArr = props.answers ? props.answers.map(a => (<ShowAnswer answer={a}/>)) : [];
 
   return (
@@ -22,9 +21,8 @@ const AnswerAdmin = (props) => {
           <span className="input-group-btn">
             <button
               onClick={props.makeNewAnswer}
-              type="submit"
               className="btn btn-default"
-              >Submit
+              >Add New Answer
             </button>
           </span>
         </div>

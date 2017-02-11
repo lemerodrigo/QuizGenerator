@@ -6,17 +6,17 @@ const NewQuestion = (props) => {
     <div className="question-new panel panel-default">
       <div className="editor-nav panel-body input-group">
         <input
+          onChange={props.handleNewQuestionChange}
           type="text"
           className="form-control"
           placeholder="New Question"
-          value={props.question}
+          value={props.newQuestion}
         />
         <span className="input-group-btn">
           <button
             onClick={props.makeNewQuestion}
-            type="submit"
-            className="btn btn-default"
-            >Submit
+            className="btn btn-default">
+            Add New Question
           </button>
         </span>
       </div>
