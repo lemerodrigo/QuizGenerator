@@ -55,14 +55,8 @@ class Login extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="form-group">
-                  <input className="form-control" placeholder="Password" name="password" type="password" value="" />
-                </div>
-                <button className="btn btn-primary btn-block">Login</button>
-              </fieldset>
-            </form>
-          </div>
-        </div>
+              </div>
+            </div>
     );
   }
 }
