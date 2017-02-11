@@ -11,6 +11,8 @@ const QuestionAdmin = (props) => {
       </div>
 
       <AnswerAdmin
+        handleNewAnswerChange={props.handleNewAnswerChange}
+        questionKey={props.questionKey}
         answers={props.answers}
         makeNewAnswer={props.makeNewAnswer}
       />

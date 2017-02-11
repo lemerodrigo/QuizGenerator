@@ -12,7 +12,6 @@ class NewQuiz extends React.Component {
       questions: [],
       answers: [],
       newQuestion: '',
-      newAnswers: [],
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,6 +21,7 @@ class NewQuiz extends React.Component {
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleDescChange = this.handleDescChange.bind(this);
     this.handleNewQuestionChange = this.handleNewQuestionChange.bind(this);
+    this.handleNewAnswerChange = this.handleNewAnswerChange.bind(this);
   }
 
   handleTitleChange(e) {
@@ -40,6 +40,7 @@ class NewQuiz extends React.Component {
     this.setState({ 
       newQuestion: e.target.value 
     }, () => {
+      console.log('newQ:', this.state.newQuestion);
       if (e.keyCode === 13) {
         this.makeNewQuestion(e);
       }
@@ -57,11 +58,10 @@ class NewQuiz extends React.Component {
   }
 
   handleNewAnswerChange(e) {
-    const newAnswers = this.state.answers.slice();
-    newAnswers[e.target.key] = this.target.value;
-    this.setState({
-      newAnswers: newAnswers
-    }, () => console.log('questions:', this.state.answers));
+    let targetIndex = 'newAnswerQuestion' + e.target.dataset.question;
+    const newState = {};
+    newState[targetIndex] = e.target.value;
+    this.setState(newState, () => console.log('new Answers:', this.state));
   }
 
   makeNewAnswer(e) {
@@ -83,13 +83,13 @@ class NewQuiz extends React.Component {
   
 
   render() {
-    console.log('questions', this.state.questions);
     const questions = this.state.questions ? this.state.questions : [];
     const questionsArr = questions.map((question, i) => (<QuestionAdmin
-      key={i}
+      questionKey={i}
       question={question}
-      answers={this.state.answers[i]}
+      answers={this.state.answers}
       makeNewAnswer={this.makeNewAnswer}
+      handleNewAnswerChange={this.handleNewAnswerChange}
     />));
 
     return (

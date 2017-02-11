@@ -2,6 +2,7 @@ import React from 'react';
 import ShowAnswer from './ShowAnswer.jsx';
 
 const AnswerAdmin = (props) => {
+  console.log(props);
   const answersArr = props.answers ? props.answers.map(a => (<ShowAnswer answer={a}/>)) : [];
 
   return (
@@ -13,6 +14,9 @@ const AnswerAdmin = (props) => {
       <div className="answer-controls">
         <div className="input-answer input-group">
           <input
+            onChange={props.handleNewAnswerChange}
+            data-question={props.questionKey}
+            name={props.questionKey}
             type="text"
             className="form-control"
             placeholder="New Answer"
