@@ -7,7 +7,9 @@ class ShowQuiz extends React.Component {
     super(props);
 
     this.state = {
-      quiz: {},
+      quiz: {
+        questions: [],
+      },
     };
   };
 
@@ -25,16 +27,23 @@ class ShowQuiz extends React.Component {
   }
 
   render() {
-    console.log(this.props.params.id);
-    const quiz = this.props.quizzes.find(quiz => quiz.id === Number(this.props.params.id));
+
+    const showQuestionArr = this.state.quiz.questions.map(q => {
+      return (
+        <ShowQuestion
+          question={q.question}
+          answers={q.answers}
+        />
+      );
+    });
 
     return (
       <div className="container">
         <div className="row">
           <div className="col-sm-6 col-sm-offset-3">
 
-            <h2>{quiz && quiz.name}</h2>
-            <h5>{quiz && quiz.description}</h5>
+            <h2>{this.state.quiz.name}</h2>
+            <h5>{this.state.quiz.description}</h5>
 
             <hr/>
 
@@ -45,9 +54,11 @@ class ShowQuiz extends React.Component {
 
             <hr/>
 
-            <ShowQuestion/>
-            <ShowQuestion/>
-            <ShowQuestion/>
+            {showQuestionArr}
+
+            <hr/>
+
+            <button type="button" className="btn btn-primary btn-lg btn-block">Submit</button>
 
           </div>
         </div>
