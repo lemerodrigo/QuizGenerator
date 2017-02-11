@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 const Quizzes = (props) => {
   const quizzes = props.quizzes.map((quiz) => {
-    return <h5><Link className="list-group-item" key={quiz.id} to={`/quizzes/${quiz.id}`}>{quiz.name}: {quiz.description}</Link></h5>
+    return <Link className="list-group-item" key={quiz.id} to={`/quizzes/${quiz.id}`}><h4>{quiz.name}</h4><p>{quiz.description}</p></Link>
   });
 
   return (
