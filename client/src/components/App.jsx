@@ -14,8 +14,9 @@ class App extends Component {
     this.updateState = this.updateState.bind(this);
     this.getState = this.getState.bind(this);
     this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
   }
-  
+
   getState() {
     return this.state;
   }
@@ -52,9 +53,9 @@ class App extends Component {
             this.setState(updateStateData, () => {
               this.props.router.push('/quizzes');
             });
-            console.log('LOGEDIN');
         } else {
             console.log('LOGIN FAILED');
+            e.target.password.value = 'wrong password';
         }
       })
       .catch((err) => {
@@ -62,19 +63,25 @@ class App extends Component {
       });
   }
 
+  logout() {
+    this.setState({
+      loggedIn: false,
+      user: null,
+    });
+  }
+
   render() {
     return (
       <div>
         <Navbar loggedIn={this.state.loggedIn} />
-        <div className="container">
-          {React.cloneElement(this.props.children, {
-            quizzes: this.state.quizzes,
-            loggedIn: this.state.loggedIn,
-            updateState: this.updateState,
-            getState: this.getState,
-            login: this.login,
-          })}
-        </div>
+        {React.cloneElement(this.props.children, {
+          quizzes: this.state.quizzes,
+          loggedIn: this.state.loggedIn,
+          updateState: this.updateState,
+          getState: this.getState,
+          login: this.login,
+          logout: this.logout,
+        })}
       </div>
     );
   }

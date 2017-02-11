@@ -3,9 +3,10 @@ import ShowAnswer from './ShowAnswer.jsx';
 
 const ShowQuestion = (props) => {
 
-  const answersArr = props.answers.map(a => {
+  const answersArr = props.answers.map((a, i) => {
     return (
       <ShowAnswer
+        key={i}
         answer={a}
       />
     );
@@ -27,4 +28,3 @@ const ShowQuestion = (props) => {
 }
 
 export default ShowQuestion;
-
