@@ -31,7 +31,6 @@ app.use('/api/quizzes', quizzes);
 app.use('/api/users', users);
 
 app.use((err, req, res, next) => {
-  console.log(err);
   res.status(err.status || 500).json(err);
 });
 

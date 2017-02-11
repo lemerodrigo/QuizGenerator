@@ -1,4 +1,4 @@
-# Quixz Generator
+# Quiz Generator
 
 Stack:
 
@@ -9,12 +9,6 @@ Stack:
 * PostgreSQL
 * Webpack
 
-To be done:
-
-- Allow quiz attendants to chat with each other
-- Implement live rankings
-- Reports to admin users
-
 Setup instructions:
 
 - Inside your server folder, create a subfolder called config
@@ -23,7 +17,7 @@ Setup instructions:
 
 ```json
 module.exports = {
- url: 'postgres://user:password@DB_SERVER_IP:DB_SERVER_POSRT/DB_NAME'
+ url: 'postgres://user:password@DB_SERVER_IP:DB_SERVER_PORT/DB_NAME'
 };
 ```
 
@@ -32,4 +26,5 @@ module.exports = {
 License
 ----
 MIT
+
 **Free Software, Hell Yeah!**
