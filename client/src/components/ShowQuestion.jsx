@@ -1,21 +1,30 @@
 import React from 'react';
 import ShowAnswer from './ShowAnswer.jsx';
 
-const ShowQuestion = () => (
-  <div className="question panel panel-default">
+const ShowQuestion = (props) => {
 
-    <div className="question-desc panel-heading">
-      <h3 className="panel-title">Isn't this a very mind-blowing quiz question being asked?</h3>
+  const answersArr = props.answers.map(a => {
+    return (
+      <ShowAnswer
+        answer={a}
+      />
+    );
+  });
+
+  return (
+    <div className="question panel panel-default">
+
+      <div className="question-desc panel-heading">
+        <h3 className="panel-title">{props.question}</h3>
+      </div>
+
+      <div className="panel-body answer">
+        {answersArr}
+      </div>
+
     </div>
-
-    <div className="panel-body answer">
-      <ShowAnswer/>
-      <ShowAnswer/>
-      <ShowAnswer/>
-    </div>
-
-  </div>
-)
+  )
+}
 
 export default ShowQuestion;
 

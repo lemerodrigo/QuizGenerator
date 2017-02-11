@@ -1,10 +1,10 @@
 import React from 'react';
 
-const ShowAnswer = () => (
+const ShowAnswer = (props) => (
     <div className="radio answer-desc">
       <label>
         <input type="radio" name="optionsRadios" value="" />
-        An answer goes here.
+          {props.answer}
       </label>
     </div>
 )
