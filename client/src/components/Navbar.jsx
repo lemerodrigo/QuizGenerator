@@ -13,17 +13,19 @@ class Navbar extends Component {
             <div className='navbar-header'>
               <Link className='navbar-brand' to='/'>Quiz Generator</Link>
             </div>
-            <ul className='nav navbar-nav navbar-right'>
-              <li><Link to='/quizzes'>Quizzes</Link></li>
-              <li><Link to='/quizzes/new'>Create a New Quiz</Link></li>
-              <li>
-              {this.props.loggedIn ? (
-                <Link to="/">Log out</Link>
-              ) : (
-                <Link to="/login">Sign in</Link>
-              )}
-              </li>
-            </ul>
+
+            {this.props.loggedIn ? (
+              <ul className='nav navbar-nav navbar-right'>
+                <li><Link to='/quizzes'>Quizzes</Link></li>
+                <li><Link to='/quizzes/new'>Create a New Quiz</Link></li>
+                <li><Link to="/logout">Log out</Link></li>
+              </ul>)
+            : (
+              <ul className='nav navbar-nav navbar-right'>
+                <li><Link to="/login">Sign in</Link></li>
+              </ul>
+            )}
+
           </div>
         </div>
     )

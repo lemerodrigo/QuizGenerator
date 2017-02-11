@@ -14,8 +14,9 @@ class App extends Component {
     this.updateState = this.updateState.bind(this);
     this.getState = this.getState.bind(this);
     this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
   }
-  
+
   getState() {
     return this.state;
   }
@@ -49,15 +50,24 @@ class App extends Component {
                 user: data,
                 loggedIn: true,
             };
-            this.setState(updateStateData);
-            console.log('LOGEDIN');
+            this.setState(updateStateData, () => {
+              this.props.router.push('/quizzes');
+            });
         } else {
             console.log('LOGIN FAILED');
+            e.target.password.value = 'wrong password';
         }
       })
       .catch((err) => {
         console.log('Error logging in', err);
       });
+  }
+
+  logout() {
+    this.setState({
+      loggedIn: false,
+      user: null,
+    });
   }
 
   render() {
@@ -70,6 +80,7 @@ class App extends Component {
           updateState: this.updateState,
           getState: this.getState,
           login: this.login,
+          logout: this.logout,
         })}
       </div>
     );
