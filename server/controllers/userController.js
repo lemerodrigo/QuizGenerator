@@ -2,13 +2,12 @@ const express = require('express');
 const router = express.Router();
 const Models = require('../models');
 
-function show(req, res) {
-  return res.status(200).send('show method inside userController');
-}
-
+// Method that is going to check the credentials against our database.
 function validate(req, res, next) {
   Models.User.findOne({
     where: {
+      // We are queryin just the e-mail, then if it returns, we
+      // are going to check the stored password.
       email: req.body.email,
     },
   }).then((user) => {
@@ -29,6 +28,5 @@ function validate(req, res, next) {
 }
 
 module.exports = {
-  validate,
-  show,
+  validate
 };

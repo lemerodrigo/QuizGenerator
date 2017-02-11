@@ -1,5 +1,9 @@
+
+// A simple class to handle authentication.
+// Here is where we are going to make a post to our api
 class AuthService {
 
+  // Login method.
   login(email, password) {
     let data = {
       method: 'POST',

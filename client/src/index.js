@@ -10,12 +10,12 @@ import Quizzes from './components/Quizzes.jsx';
 import NewQuiz from './components/NewQuiz.jsx';
 import ShowQuiz from './components/ShowQuiz.jsx';
 
-
 ReactDOM.render((
   <Router history={browserHistory}>
     <Route path='/' component={App} >
-      <Route path='login' component={Login} />
       <IndexRoute component={Home} />
+      <Route path='login' component={Login} />
+
       <Route component={MustBeLoggedIn}>
         <Route path='quizzes'>
           <IndexRoute component={Quizzes} />
@@ -23,6 +23,7 @@ ReactDOM.render((
           <Route path=':id' component={ShowQuiz} />
         </Route>
       </Route>
+
     </Route>
   </Router>
 ), document.getElementById('root'));

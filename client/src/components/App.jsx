@@ -49,7 +49,9 @@ class App extends Component {
                 user: data,
                 loggedIn: true,
             };
-            this.setState(updateStateData);
+            this.setState(updateStateData, () => {
+              this.props.router.push('/quizzes');
+            });
             console.log('LOGEDIN');
         } else {
             console.log('LOGIN FAILED');
@@ -64,13 +66,15 @@ class App extends Component {
     return (
       <div>
         <Navbar loggedIn={this.state.loggedIn} />
-        {React.cloneElement(this.props.children, {
-          quizzes: this.state.quizzes,
-          loggedIn: this.state.loggedIn,
-          updateState: this.updateState,
-          getState: this.getState,
-          login: this.login,
-        })}
+        <div className="container">
+          {React.cloneElement(this.props.children, {
+            quizzes: this.state.quizzes,
+            loggedIn: this.state.loggedIn,
+            updateState: this.updateState,
+            getState: this.getState,
+            login: this.login,
+          })}
+        </div>
       </div>
     );
   }
