@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Navbar from './Navbar.jsx';
-const AuthService = require('./../classes/AuthService');
-const auth = new AuthService();
+const UserService = require('./../classes/UserService');
+const userService = new UserService();
 
 class App extends Component {
   constructor(props) {
@@ -14,6 +14,7 @@ class App extends Component {
     this.updateState = this.updateState.bind(this);
     this.getState = this.getState.bind(this);
     this.login = this.login.bind(this);
+    this.signUp = this.signUp.bind(this);
     this.logout = this.logout.bind(this);
   }
 
@@ -39,11 +40,27 @@ class App extends Component {
       });
   }
 
+  // Method called from SignUp.jsx.
+  signUp(e) {
+    console.log('inside app jsx');
+    let email = e.target.email.value;
+    let password = e.target.password.value;
+    userService.signUp(email, password)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    console.log(email, password);
+  }
+
+  // Method called from Signin.jsx.
   login(e) {
     e.preventDefault();
     let email = e.target.email.value;
     let password = e.target.password.value;
-    auth.login(email, password)
+    userService.login(email, password)
       .then((data) => {
         if (data.id) {
             let updateStateData = {
@@ -80,6 +97,7 @@ class App extends Component {
           updateState: this.updateState,
           getState: this.getState,
           login: this.login,
+          signUp: this.signUp,
           logout: this.logout,
         })}
       </div>

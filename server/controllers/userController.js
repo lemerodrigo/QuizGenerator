@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
 const Models = require('../models');
+const SALT_WORK_FACTOR = 10;
 
 // Method that is going to check the credentials against our database.
 function validate(req, res, next) {
@@ -29,6 +31,31 @@ function validate(req, res, next) {
   })
 }
 
+function signUp(req, res, next) {
+  Models.User.findOne({
+    where: {
+      // Check if the user we are trying to create already exists.
+      email: req.body.email,
+    },
+  }).then((user) => {
+    console.log(user);
+    // Everything is fine, let's create the user.
+    if (!user) {
+      // Bcrypting password before store.
+      const password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(SALT_WORK_FACTOR));
+      Models.User.create({
+        email: req.body.email,
+        password: password
+      }).then((user) => {
+        return res.status(200).json(user);
+      }).catch((err) => {
+        console.log(err);
+      })
+    }
+  });
+}
+
 module.exports = {
-  validate
+  validate,
+  signUp,
 };
