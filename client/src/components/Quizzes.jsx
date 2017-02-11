@@ -10,7 +10,7 @@ const Quizzes = (props) => {
     <div className="container">
       <div className="row">
         <div className="col-sm-6 col-sm-offset-3">
-          <h2>Quizzes (make this the dashboard)</h2>
+          <h2>All quizzes</h2>
           <div className="list-group">
             {quizzes}
           </div>
