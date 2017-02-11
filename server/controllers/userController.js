@@ -14,12 +14,13 @@ function validate(req, res, next) {
     },
   }).then((user) => {
     // General error to be returned. Not the best approach.
-    const err = new Error('Invalida data.');
+    const err = new Error('Invalida data');
     err.status = 500;
     if (!user) {
       next(err);
     } else {
-      if (user.password === req.body.password) {
+      const passwordMatch = bcrypt.compareSync(req.body.password, user.password);
+      if (passwordMatch) {
         // We could check the user password in the database. Let's return it!
         return res.status(200).json(user);
       } else {
@@ -38,8 +39,9 @@ function signUp(req, res, next) {
       email: req.body.email,
     },
   }).then((user) => {
-    console.log(user);
     // Everything is fine, let's create the user.
+    const err = new Error('Impossible to create the user');
+    err.status = 500;
     if (!user) {
       // Bcrypting password before store.
       const password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(SALT_WORK_FACTOR));
@@ -49,8 +51,10 @@ function signUp(req, res, next) {
       }).then((user) => {
         return res.status(200).json(user);
       }).catch((err) => {
-        console.log(err);
+        next(err);
       })
+    } else {
+      next(err);
     }
   });
 }

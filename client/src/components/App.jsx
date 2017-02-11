@@ -42,17 +42,25 @@ class App extends Component {
 
   // Method called from SignUp.jsx.
   signUp(e) {
-    console.log('inside app jsx');
     let email = e.target.email.value;
     let password = e.target.password.value;
     userService.signUp(email, password)
       .then((data) => {
-        console.log(data);
-      })
+        if (data.id) {
+          let updateStateData = {
+              user: data,
+              loggedIn: true,
+          };
+          this.setState(updateStateData, () => {
+            this.props.router.push('/quizzes');
+          });
+        } else {
+          console.log('Signup Error');
+        }
+      }) 
       .catch((err) => {
         console.log(err);
       })
-    console.log(email, password);
   }
 
   // Method called from Signin.jsx.
