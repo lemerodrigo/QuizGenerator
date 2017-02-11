@@ -27,6 +27,7 @@ function findOne(req, res, next) {
       parsedQuiz.name = quiz[0][0].name;
       parsedQuiz.description = quiz[0][0].description;
       parsedQuiz.id = quiz[0][0].id;
+      parsedQuiz.link = quiz[0][0].link;
 
       return quiz[0][0];
     })

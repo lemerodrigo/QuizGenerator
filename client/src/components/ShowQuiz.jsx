@@ -45,6 +45,7 @@ class ShowQuiz extends React.Component {
 
             <h2>{this.state.quiz.name}</h2>
             <h5>{this.state.quiz.description}</h5>
+            <h5>Link to quiz: <Link target='_blank' to={`/${this.state.quiz.link}`}>{this.state.quiz.link}</Link></h5>
 
             <hr/>
 
