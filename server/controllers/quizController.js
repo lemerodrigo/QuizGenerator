@@ -13,8 +13,22 @@ function findAll(req, res, next) {
 }
 
 // add quiz
-function addOne(req, res) {
+function addOne(req, res, next) {
+  const quizToAdd = {
+    name: req.body.name,
+    description: req.body.description,
+  };
 
+  Models.Quiz
+    .create(quizToAdd)
+    .then((quiz) => {
+      // also create answers
+      // only need to send back quiz info - then update state
+      res.status(200).send(quiz);
+    })
+    .catch((err) => {
+      next(err);
+    });
 }
 
 // get one quiz

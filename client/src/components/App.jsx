@@ -58,7 +58,7 @@ class App extends Component {
         } else {
           console.log('Signup Error');
         }
-      }) 
+      })
       .catch((err) => {
         console.log(err);
       })
@@ -96,7 +96,8 @@ class App extends Component {
     });
   }
 
-  createQuiz(e) {
+  createQuiz(e, localState) {
+    console.log(localState);
     let questions = [];
     let answers = [];
 
@@ -105,9 +106,9 @@ class App extends Component {
       credentials: 'same-origin',
       mode: 'same-origin',
       body: JSON.stringify({
-        name: name,
-        description: description,
-        questions: questions,
+        name: localState.quizTitle,
+        description: localState.quizDesc,
+        questions: localState.questions,
       }),
       headers: {
         'Accept': 'application/json',
@@ -116,9 +117,18 @@ class App extends Component {
     }
     return fetch('/api/quizzes', data)
       .then(response => response.json()) // update state and redirect to another page
+      .then((data) => {
+        const updatedQuizzes = this.state.quizzes.slice();
+        updatedQuizzes.push(data);
+        this.setState({
+          quizzes: updatedQuizzes,
+        }, () => {
+          this.props.router.push('/quizzes');
+        });
+      })
       .catch((err) => {
         console.log(err);
-      }); 
+      });
   }
 
   render() {
@@ -133,6 +143,7 @@ class App extends Component {
           login: this.login,
           signUp: this.signUp,
           logout: this.logout,
+          createQuiz: this.createQuiz,
         })}
       </div>
     );

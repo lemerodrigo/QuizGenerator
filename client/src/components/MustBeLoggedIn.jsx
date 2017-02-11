@@ -25,6 +25,7 @@ class MustBeLoggedIn extends React.Component {
           updateState: this.props.updateState,
           getState: this.props.getState,
           login: this.props.login,
+          createQuiz: this.props.createQuiz,
       })
     } else {
       return null;
