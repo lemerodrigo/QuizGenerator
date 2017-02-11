@@ -96,7 +96,8 @@ class App extends Component {
     });
   }
 
-  createQuiz(e) {
+  createQuiz(e, localState) {
+    console.log(localState);
     let questions = [];
     let answers = [];
 
@@ -105,9 +106,9 @@ class App extends Component {
       credentials: 'same-origin',
       mode: 'same-origin',
       body: JSON.stringify({
-        name: name,
-        description: description,
-        questions: questions,
+        name: localState.quizTitle,
+        description: localState.quizDesc,
+        questions: localState.questions,
       }),
       headers: {
         'Accept': 'application/json',
@@ -133,6 +134,7 @@ class App extends Component {
           login: this.login,
           signUp: this.signUp,
           logout: this.logout,
+          createQuiz: this.createQuiz,
         })}
       </div>
     );
