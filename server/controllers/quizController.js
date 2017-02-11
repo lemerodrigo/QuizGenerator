@@ -9,7 +9,7 @@ function findAll(req, res, next) {
     return res.status(200).json(quizzes);
   }).catch((err) => {
     next(err);
-  })
+  });
 }
 
 // add quiz
